@@ -4,7 +4,7 @@ uci -q batch <<-EOF >/dev/null
 	delete firewall.anti_client
 	set firewall.anti_client=include
 	set firewall.anti_client.type=script
-	set firewall.anti_client.path=/var/etc/luci-app-openvpn-client.include
+	set firewall.anti_client.path=/var/etc/luci-app-anti-client.include
 	set firewall.anti_client.reload=1
 EOF
 
