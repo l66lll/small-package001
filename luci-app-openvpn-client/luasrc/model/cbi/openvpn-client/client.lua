@@ -1,11 +1,11 @@
 local d = require "luci.dispatcher"
 
-m = Map("luci-app-openvpn-client", translate("Client List"))
+m = Map("luci-app-anti-client", translate("Client List"))
 m.apply_on_parse = true
-m.redirect = d.build_url("admin", "vpn", "openvpn-client")
+m.redirect = d.build_url("admin", "services", "anti-client")
 
 m.on_apply = function(self)
-    luci.sys.call("/etc/init.d/luci-app-openvpn-client start %s" % arg[1])
+    luci.sys.call("/etc/init.d/luci-app-anti-client start %s" % arg[1])
     luci.http.redirect( self.redirect )
 end
 
