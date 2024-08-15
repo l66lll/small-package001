@@ -1,14 +1,14 @@
 local d = require "luci.dispatcher"
 local sys = require "luci.sys"
 
-m = Map("luci-app-openvpn-client", translate("OpenVPN Client"))
+m = Map("luci-app-anti-client", translate("Anti Client"))
 m.apply_on_parse = true
 
 s = m:section(TypedSection, "clients", translate("Client List"))
 s.addremove = true
 s.anonymous = true
 s.template = "cbi/tblsection"
-s.extedit = d.build_url("admin", "vpn", "openvpn-client", "client", "%s")
+s.extedit = d.build_url("admin", "services", "anti-client", "client", "%s")
 function s.create(e, t)
     t = TypedSection.create(e, t)
     luci.http.redirect(e.extedit:format(t))
@@ -19,7 +19,7 @@ o.default = 1
 o.rmempty = false
 
 function s.getPID(section) -- Universal function which returns valid pid # or nil
-	local pid = sys.exec("top -bn1 | grep -v 'grep' | grep '/var/etc/openvpn-client/%s'" % { section })
+	local pid = sys.exec("top -bn1 | grep -v 'grep' | grep '/var/etc/anti-client/%s'" % { section })
 	if pid and #pid > 0 then
 		return tonumber(pid:match("^%s*(%d+)"))
 	else
@@ -41,7 +41,7 @@ end
 local updown = s:option( Button, "_updown", translate("Start/Stop") )
 updown._state = false
 updown.redirect = d.build_url(
-	"admin", "vpn", "openvpn-client"
+	"admin", "services", "anti-client"
 )
 function updown.cbid(self, section)
 	local pid = s.getPID(section)
@@ -55,9 +55,9 @@ function updown.cfgvalue(self, section)
 end
 function updown.write(self, section, value)
 	if self.option == "stop" then
-		sys.call("/etc/init.d/luci-app-openvpn-client stop %s" % section)
+		sys.call("/etc/init.d/luci-app-anti-client stop %s" % section)
 	else
-		sys.call("/etc/init.d/luci-app-openvpn-client start %s" % section)
+		sys.call("/etc/init.d/luci-app-anti-client start %s" % section)
 	end
 	luci.http.redirect( self.redirect )
 end
