@@ -1,5 +1,5 @@
 msgid "OpenVPN Client"
-msgstr "OpenVPN 客户端"
+msgstr "Anti 客户端"
 
 msgid "Client List"
 msgstr "客户端列表"
